@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ today.user }}님의 {{ today.date }} 일기</h1>
+<h2> 제목 : {{ today.title }} </h2>
+
+<h3> 오늘의 날씨 : {{ today.weather }}</h3>
+
+ <h3>{{ today.content | linebreaksbr }}</h3>
+
+<p>
+    {% include 'app/todo_list.html' %}
+</p>
+
+<!-- 작성자와 현재 사용자가 같을 경우  -->
+
+{% if request.user == today.user %}
+<p>
+    {% include 'app/todo_form.html'%}
+   
+</p>
+<p>
+    <a href="{% url 'app:update_today' today.pk %}">
+        <button class="btn btn-warning"> 수정하기</button>
+    </a>
+</p>
+
+<p>
+    <form action="{% url 'app:delete_today' today.pk %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-danger">지우기</button>
+    </form>
+</p>
+{% endif %}
+
+
+
+
+<!-- 로그인  -->
+{% if request.user.is_authenticated %}
+<div>
+    <div>
+    <form action="{% url 'app:like_today' today.pk %}" method="POST">
+        {% csrf_token %}
+        {% if is_like %}
+        <button class="btn btn-primary">
+            좋아요 취소
+        </button>
+        {% else %}
+        <button class="btn btn-light">
+            좋아요  {{ today.like_users.count }}
+        </button>
+        {% endif %}
+        
+    </form> 
+</div>
+     <div>
+     <form action="{% url 'app:sad_today' today.pk %}" method="POST">
+        {% csrf_token %}
+        {% if is_sad %}
+        <button class="btn btn-info">
+            슬퍼요 취소
+        </button>
+        {% else %}
+        <button class="btn btn-light">
+            슬퍼요  {{ today.sad_users.count }}
+        </button>
+        {% endif %}
+        
+    </form> 
+</div>
+     <div>
+     <form action="{% url 'app:best_today' today.pk %}" method="POST">
+        {% csrf_token %}
+        {% if is_best %}
+        <button class="btn btn-success">
+            최고에요! 취소
+        </button>
+        {% else %}
+        <button class="btn btn-light">
+            최고에요!  {{ today.best_users.count }}
+        </button>
+        {% endif %}
+        
+    </form> 
+</div>
+</div>
+
+
+
+
+    {% include 'app/reply_form.html' %}
+{% endif %}
+
+
+{% include 'app/reply_list.html' %}
+
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+<h1>My diary</h1>
+
+<ul>
+    
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"> </th>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+            <th scope="col">날짜</th>
+            <th scope="col">날씨</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for today in page_obj %}
+          
+          <tr>
+            <th scope="row">{{ today.pk }}</th>
+            <td><a href="{% url 'app:today_detail' today.pk %}">{{ today.title }}</a></td>
+            <td><a href="{% url 'accounts:profile' today.user %}">{{ today.user }}</a></td>
+            <td>{{ today.date}}</td>
+            <td>{{ today.weather}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center mt-5">
+        {% bootstrap_pagination page_obj %}
+      </div>
+</ul>
+
+
+{% endblock content %}

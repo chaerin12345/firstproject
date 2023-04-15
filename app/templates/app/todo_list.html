@@ -1,0 +1,25 @@
+<div>
+    <strong>Todo List</strong>
+    <ul>
+        {% for todo in todo_list %}
+        <li>
+         
+             <div>
+                <form action="{% url 'app:complete' today.pk %}" method="POST">
+                   {% csrf_token %}
+                   {% if is_complete %}
+                   <button class="btn btn-primary">
+                       완료  
+                   </button>
+                   {% else %}
+                   <button class="btn btn-danger">
+                        미완료
+                </button>
+                   {% endif %} 
+               </form> 
+            {{ todo.todo_complete}}
+            {{ todo.todo_content }}
+        </li>
+        {% endfor %}
+    </ul> 
+</div>

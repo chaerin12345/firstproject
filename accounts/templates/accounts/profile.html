@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{ profile_user.username }}의 다이어리</h1>
+
+<p>
+   {% include 'accounts/friends_list.html' %}
+</p>
+{% if profile_user != request.user %}
+<form action="{% url 'accounts:friend' profile_user.username %}" method="POST">
+    {% csrf_token %}
+    {% if friend_list %}
+    <button>친구 끊기</button>
+    {% else %}
+    <button>친구 신청</button>
+    {% endif %}
+</form>
+{% endif %}
+
+{% include 'accounts/profile_index.html' %}
+
+
+
+
+
+{% endblock content %}

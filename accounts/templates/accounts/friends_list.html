@@ -1,0 +1,8 @@
+<h2>친구 목록</h2>
+<ul>
+    {% for profile_user in profile_user.friends.all %}
+    <li>
+        <a href="{% url 'accounts:profile' profile_user.username %}">{{ profile_user.friends }}</a>
+    </li>
+    {% endfor %}
+</ul>

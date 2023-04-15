@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    
+    {% bootstrap_form form %}
+    {% comment %} <p> {% include 'app/todo_form.html'%}</p> {% endcomment %}
+    <div>
+        <button class="btn btn-primary">upload</button>
+    </div>
+</form>
+
+
+{% endblock content %}
